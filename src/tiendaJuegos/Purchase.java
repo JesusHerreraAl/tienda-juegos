@@ -24,6 +24,9 @@ public class Purchase {
 	public int getQuantity() {
 		return quantity;
 	}
+	public double getTotalPrice() {
+		return totalPrice;
+	}
 
 	@Override
 	public String toString() {

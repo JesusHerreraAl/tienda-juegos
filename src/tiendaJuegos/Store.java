@@ -9,6 +9,8 @@ public class Store {
 	private ArrayList<Purchase> purchases;
 	
 	public Store () {
+		//CREA LAS LISTAS VACIAS
+		//METEMOS VALORES AHORA MISMO PARA IR PROBANDO
 		games=new ArrayList<Game>();//vacio
 		customers= new ArrayList<Customer>();
 		purchases= new ArrayList<Purchase>();
@@ -69,7 +71,59 @@ public class Store {
 		return clienteObtenidoPorId;
 		
 	}
-	//METODO PARA BUSCAR POR TEXTO
+	//METODO PARA BUSCAR POR TEXTO, CREO QUE DEVOLVERIA SOLO UN JUEGO EJERCICIO 8.4
+	public Game buscarJuegoPorNombre(String nombre) throws Exception {
+		Game juegoObtenidoPorNombre=null;
+		for (Game juego: games) {
+			if(juego.getTitle().toUpperCase().contains(nombre.toUpperCase())){
+				juegoObtenidoPorNombre=juego;
+			}
+		}
+		if (juegoObtenidoPorNombre==null) {
+			throw new Exception ("No hay ningun juego que tenga esa palabra");
+		}
+		return juegoObtenidoPorNombre;
+	}
+	
+	//METODO PARA HACER UNA LISTA CON LOS JUEGOS QUE CONTENGAN UNA PALABRA
+	public ArrayList<Game> listaJuegosBuscadosPorNombre (String nombre) throws Exception{
+		ArrayList<Game> listaConJuegosBuscados = new ArrayList <>();
+		for(Game juego: games) {
+			if(juego.getTitle().toUpperCase().contains(nombre.toUpperCase())){
+				listaConJuegosBuscados.add(juego);
+			}
+		}
+		if(listaConJuegosBuscados==null) {
+			throw new Exception ("No hay ningun juego que tenga esa palabra");
+		}
+		
+		return listaConJuegosBuscados;
+		
+	}
+	//METODO PARA FILTRAR POR GENERO Y DEVOLVER UNA LISTA CON TODOS LOS JUEGOS DE ESE GENERO
+	//EJERCICIO 8.5
+	public ArrayList<Game> filtrarPorGenero (String genero) throws Exception {
+		//QUIZAS PUEDO DECIR QUE RECIBA UN GENERO EN MAIN Y ESTE MISMO LO CONVIERTA A ENUM
+		
+		ArrayList<Game> listaConJuegosBuscados = new ArrayList <>();
+		for(Game juego: games) {
+			//SI EL GENERO DEL JUEGO CONVERTIDO A STRING ES IGUAL AL GENERO INTRODUCIDO COMO STRING
+			if(juego.getGenre().toString().equalsIgnoreCase(genero)) {
+				listaConJuegosBuscados.add(juego);
+			}
+		}
+		if (listaConJuegosBuscados==null) {
+			throw new Exception("No hya juegos con ese genero");
+		}
+		
+		return listaConJuegosBuscados;
+	}
+	//METODO PARA COMPRAR VIDEOJUEGO
+	
+	public void comprarVideojuego() {
+		
+		
+	}
 	
 	
 

@@ -52,6 +52,7 @@ public class Game {
 
 	public void reducirStock(int cantidad) {
 		//IMPLEMENTAR MEJORA
+		
 		this.stock = stock - cantidad;
 	}
 
