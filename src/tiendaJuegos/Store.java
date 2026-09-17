@@ -19,6 +19,8 @@ public class Store {
 	public ArrayList<Game> getGames() {
 		return games;
 	}
+	
+	//METODO AÑADIR JUEGO Y NO SE PUEDE REPETIR ME FALTA 8.1
 
 	public void setGames(ArrayList<Game> games) {
 		//Tendria que crear un exception que no deje añadir otro juego con el mismo id
@@ -113,16 +115,21 @@ public class Store {
 			}
 		}
 		if (listaConJuegosBuscados==null) {
-			throw new Exception("No hya juegos con ese genero");
+			throw new Exception("No hay juegos con ese genero");
 		}
 		
 		return listaConJuegosBuscados;
 	}
-	//METODO PARA COMPRAR VIDEOJUEGO
-	
-	public void comprarVideojuego() {
+	//METODO PARA COMPRAR VIDEOJUEGO PURCHASE
+	public Purchase comprarVideojuego(int idCliente, int idJuego, int cantidad) throws Exception {
 		
+		if (cantidad<=0) {
+			throw new Exception("La cantidad no puede ser menor que 0");
+		}
 		
+		//MODIFICAR ESTA PARTE LUEGO 
+		//Purchase compra = new Purchase(Customer customer, Game game, int quantity);
+		return null;
 	}
 	
 	
