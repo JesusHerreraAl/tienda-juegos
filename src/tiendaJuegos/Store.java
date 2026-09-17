@@ -55,7 +55,7 @@ public class Store {
 		return juegoObtenidoPorId;
 		
 	}
-	//METODO PARA OBTENER CLIENTES POR ID
+	//METODO PARA OBTENER CLIENTES POR ID EJERCICIO 8.3
 	public Customer clientePorId(int id) throws Exception{
 		Customer clienteObtenidoPorId=null;
 		for (Customer cliente: customers) {
@@ -69,6 +69,7 @@ public class Store {
 		return clienteObtenidoPorId;
 		
 	}
+	//METODO PARA BUSCAR POR TEXTO
 	
 	
 
