@@ -55,6 +55,20 @@ public class Store {
 		return juegoObtenidoPorId;
 		
 	}
+	//METODO PARA OBTENER CLIENTES POR ID
+	public Customer clientePorId(int id) throws Exception{
+		Customer clienteObtenidoPorId=null;
+		for (Customer cliente: customers) {
+			if(cliente.getId()==id) {
+				clienteObtenidoPorId=cliente;
+			}
+		}
+		if(clienteObtenidoPorId==null) {
+			throw new Exception ("Cliente no encontrado");
+		}
+		return clienteObtenidoPorId;
+		
+	}
 	
 	
 
