@@ -51,6 +51,7 @@ public class Customer {
 			System.out.println("No dispones de esa cantidad");
 		}
 	}
+	//comprobar si tenemos disponibilidad de la cantidad que hemos introducido
 	public boolean comprobarDisponibilidadBoolean(double cantidad){
 		boolean disponible = false;
 		if(this.balance>=cantidad) {

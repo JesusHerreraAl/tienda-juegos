@@ -3,6 +3,7 @@ package tiendaJuegos;
 public class Purchase {
 	
 	//REPRESENTA LAS COMPRAS DE LA TIENDAS QUE SE GUARDAN 
+	
 	private Customer customer; //CLIENTE 
 	private Game game;
 	private int quantity; //CANTIDAD

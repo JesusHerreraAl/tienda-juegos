@@ -3,136 +3,212 @@ package tiendaJuegos;
 import java.util.ArrayList;
 
 public class Store {
-	
+
 	private ArrayList<Game> games;
 	private ArrayList<Customer> customers;
 	private ArrayList<Purchase> purchases;
-	
-	public Store () {
-		//CREA LAS LISTAS VACIAS
-		//METEMOS VALORES AHORA MISMO PARA IR PROBANDO
-		games=new ArrayList<Game>();//vacio
-		customers= new ArrayList<Customer>();
-		purchases= new ArrayList<Purchase>();
+
+	public Store() {
+		// CREA LAS LISTAS VACIAS
+		// METEMOS VALORES AHORA MISMO PARA IR PROBANDO
+		games = new ArrayList<Game>();// vacio
+		customers = new ArrayList<Customer>();
+		purchases = new ArrayList<Purchase>();
 	}
 
 	public ArrayList<Game> getGames() {
 		return games;
 	}
-	
-	//METODO AÑADIR JUEGO Y NO SE PUEDE REPETIR ME FALTA 8.1
 
-	public void setGames(ArrayList<Game> games) {
-		//Tendria que crear un exception que no deje añadir otro juego con el mismo id
-		this.games = games;
+	// METODO AÑADIR JUEGO Y NO SE PUEDE REPETIR 8.1
+	public void addVideojuego(Game juegoNuevo) throws Exception {
+
+		// ANTES DE AÑADIR EL JUEGO QUE RECIBO ES COMPROBAR QUE ESE JUEGO NO SEA NULO.
+		if (juegoNuevo == null) {
+			throw new Exception("El juego es nulo");
+		}
+		// BUCLE QUE RECORRERA LA LISTA DE VIDEOJUEGOS PARA COMPROBAR QUE ESE JUEGO
+		// NUEVO
+		// NO ESTA DENTRO DE LA LISTA CON ESE MISMO ID, ES DECIR QUE NO SE REPITA EL ID
+		for (Game juego : games) {
+			if (juegoNuevo.getId() == juego.getId()) {
+				throw new Exception("El juego con ese id ya existe, por lo tanto no se podra guardar");
+			}
+		}
+		// SE GUARDA EL JUEGONUEVO A LA LISTA DE GAMES
+		games.add(juegoNuevo);
+
 	}
+
+	/*
+	 * metodo generado automaticamente, no lo usare public void
+	 * setGames(ArrayList<Game> games) { //Tendria que crear un exception que no
+	 * deje añadir otro juego con el mismo id this.games = games; }
+	 */
 
 	public ArrayList<Customer> getCustomers() {
 		return customers;
 	}
-
-	public void setCustomers(ArrayList<Customer> customers) {
-		this.customers = customers;
-	}
+	/*
+	 * metodo generado automaticamente, no lo usare public void
+	 * setCustomers(ArrayList<Customer> customers) { this.customers = customers; }
+	 */
 
 	public ArrayList<Purchase> getPurchases() {
 		return purchases;
 	}
+	/*
+	 * metodo generado automaticamente, no lo usare public void
+	 * setPurchases(ArrayList<Purchase> purchases) { this.purchases = purchases; }
+	 */
 
-	public void setPurchases(ArrayList<Purchase> purchases) {
-		this.purchases = purchases;
-	}
-	//necesito metodo que pille de un juego del arraylist el id
-	//en main hacer un bloque try catch
-	public Game juegoPorId(int id) throws Exception{
-		
-		Game juegoObtenidoPorId=null;
-		
-		for(Game juego: games) {
-			if(juego.getId()==id) {
-				juegoObtenidoPorId=juego;
-			}	
+	/*
+	 * NOTA: necesito metodo que pille de un juego del arraylist el id en main hacer
+	 * un bloque try catch
+	 */
+	public Game juegoPorId(int id) throws Exception {
+
+		Game juegoObtenidoPorId = null;
+
+		for (Game juego : games) {
+			if (juego.getId() == id) {
+				juegoObtenidoPorId = juego;
+			}
 		}
-		if (juegoObtenidoPorId==null){
+		if (juegoObtenidoPorId == null) {
 			throw new Exception("Juego no encontrado");
 		}
 		return juegoObtenidoPorId;
-		
+
 	}
-	//METODO PARA OBTENER CLIENTES POR ID EJERCICIO 8.3
-	public Customer clientePorId(int id) throws Exception{
-		Customer clienteObtenidoPorId=null;
-		for (Customer cliente: customers) {
-			if(cliente.getId()==id) {
-				clienteObtenidoPorId=cliente;
+
+	// METODO PARA OBTENER CLIENTES POR ID EJERCICIO 8.3
+	public Customer clientePorId(int id) throws Exception {
+		Customer clienteObtenidoPorId = null;
+		for (Customer cliente : customers) {
+			if (cliente.getId() == id) {
+				clienteObtenidoPorId = cliente;
 			}
 		}
-		if(clienteObtenidoPorId==null) {
-			throw new Exception ("Cliente no encontrado");
+		if (clienteObtenidoPorId == null) {
+			throw new Exception("Cliente no encontrado");
 		}
 		return clienteObtenidoPorId;
-		
+
 	}
-	//METODO PARA BUSCAR POR TEXTO, CREO QUE DEVOLVERIA SOLO UN JUEGO EJERCICIO 8.4
+
+	// METODO PARA BUSCAR POR TEXTO, CREO QUE DEVOLVERIA SOLO UN JUEGO EJERCICIO 8.4
 	public Game buscarJuegoPorNombre(String nombre) throws Exception {
-		Game juegoObtenidoPorNombre=null;
-		for (Game juego: games) {
-			if(juego.getTitle().toUpperCase().contains(nombre.toUpperCase())){
-				juegoObtenidoPorNombre=juego;
+		Game juegoObtenidoPorNombre = null;
+		for (Game juego : games) {
+			if (juego.getTitle().toUpperCase().contains(nombre.toUpperCase())) {
+				juegoObtenidoPorNombre = juego;
 			}
 		}
-		if (juegoObtenidoPorNombre==null) {
-			throw new Exception ("No hay ningun juego que tenga esa palabra");
+		if (juegoObtenidoPorNombre == null) {
+			throw new Exception("No hay ningun juego que tenga esa palabra");
 		}
 		return juegoObtenidoPorNombre;
 	}
-	
-	//METODO PARA HACER UNA LISTA CON LOS JUEGOS QUE CONTENGAN UNA PALABRA
-	public ArrayList<Game> listaJuegosBuscadosPorNombre (String nombre) throws Exception{
-		ArrayList<Game> listaConJuegosBuscados = new ArrayList <>();
-		for(Game juego: games) {
-			if(juego.getTitle().toUpperCase().contains(nombre.toUpperCase())){
+
+	// METODO PARA HACER UNA LISTA CON LOS JUEGOS QUE CONTENGAN UNA PALABRA
+	public ArrayList<Game> listaJuegosBuscadosPorNombre(String nombre) throws Exception {
+		ArrayList<Game> listaConJuegosBuscados = new ArrayList<>();
+		for (Game juego : games) {
+			if (juego.getTitle().toUpperCase().contains(nombre.toUpperCase())) {
 				listaConJuegosBuscados.add(juego);
 			}
 		}
-		if(listaConJuegosBuscados==null) {
-			throw new Exception ("No hay ningun juego que tenga esa palabra");
+		if (listaConJuegosBuscados == null) {
+			throw new Exception("No hay ningun juego que tenga esa palabra");
 		}
-		
+
 		return listaConJuegosBuscados;
-		
+
 	}
-	//METODO PARA FILTRAR POR GENERO Y DEVOLVER UNA LISTA CON TODOS LOS JUEGOS DE ESE GENERO
-	//EJERCICIO 8.5
-	public ArrayList<Game> filtrarPorGenero (String genero) throws Exception {
-		//QUIZAS PUEDO DECIR QUE RECIBA UN GENERO EN MAIN Y ESTE MISMO LO CONVIERTA A ENUM
-		
-		ArrayList<Game> listaConJuegosBuscados = new ArrayList <>();
-		for(Game juego: games) {
-			//SI EL GENERO DEL JUEGO CONVERTIDO A STRING ES IGUAL AL GENERO INTRODUCIDO COMO STRING
-			if(juego.getGenre().toString().equalsIgnoreCase(genero)) {
+
+	// METODO PARA FILTRAR POR GENERO Y DEVOLVER UNA LISTA CON TODOS LOS JUEGOS DE
+	// ESE GENERO
+	// EJERCICIO 8.5
+	public ArrayList<Game> filtrarPorGenero(String genero) throws Exception {
+		// QUIZAS PUEDO DECIR QUE RECIBA UN GENERO EN MAIN Y ESTE MISMO LO CONVIERTA A
+		// ENUM
+
+		ArrayList<Game> listaConJuegosBuscados = new ArrayList<>();
+		for (Game juego : games) {
+			// SI EL GENERO DEL JUEGO CONVERTIDO A STRING ES IGUAL AL GENERO INTRODUCIDO
+			// COMO STRING
+			if (juego.getGenre().toString().equalsIgnoreCase(genero)) {
 				listaConJuegosBuscados.add(juego);
 			}
 		}
-		if (listaConJuegosBuscados==null) {
+		if (listaConJuegosBuscados == null) {
 			throw new Exception("No hay juegos con ese genero");
 		}
-		
+
 		return listaConJuegosBuscados;
 	}
-	//METODO PARA COMPRAR VIDEOJUEGO PURCHASE
+
+	// METODO PARA COMPRAR VIDEOJUEGO PURCHASE
 	public Purchase comprarVideojuego(int idCliente, int idJuego, int cantidad) throws Exception {
-		
-		if (cantidad<=0) {
+		Customer clienteEncontrado = null;
+		Game juegoEncontrado = null;
+		// COMPROBAR QUE LA CANTIDAD NO ES 0 NI MENOR QUE 0
+		if (cantidad <= 0) {
 			throw new Exception("La cantidad no puede ser menor que 0");
 		}
+
 		
-		//MODIFICAR ESTA PARTE LUEGO 
-		//Purchase compra = new Purchase(Customer customer, Game game, int quantity);
-		return null;
+		/* recorremos la lista de games buscando que ese id Exista, si lo hace creamos
+		 el juego*/
+		for (Game game : games) {
+			if (idJuego == game.getId()) {
+				// tengo que añadir que si hay stock !!SEGUN YO COMO EL JUEGO CON ID EXISTE AHORA COMPRUEBO SU DISPONIBILIDAD!!
+				if(game.comprobarDisponibilidad()) {
+					juegoEncontrado = game;
+				}
+			}
+		}
+		if (juegoEncontrado == null) {
+			throw new Exception("Juego no existe");
+		}
+
+		// COMPROBAR QUE EL CLIENTE EXISTE, recorro la lista y si existe guardo ese
+		// cliente
+		for (Customer cliente : customers) {
+			if (idCliente == cliente.getId()) {
+				/* !!!IMPORTANTE!!! hay que comprobar el balance dentro, pendiente de hacer, 
+				 * quizas use truco aqui... jajaja creando antes el juego y accediendo al precio y a ese precio multiplico por la cantidad
+				*/
+				if (cliente.comprobarDisponibilidadBoolean(juegoEncontrado.getPrice()*cantidad)) {
+					clienteEncontrado = cliente;
+				}else {
+					throw new Exception("Balance insuficiente");
+				}
+			}
+		}
+		// si el cliente anterior sigue siendo null, entonces es que no lo encontro
+		if (clienteEncontrado == null) {
+			throw new Exception("Cliente no existe");
+		}
+
+		// cuando los anteriores filtros ya pasan damos de alto la compra
+		Purchase compra = new Purchase(clienteEncontrado, juegoEncontrado, cantidad);
+		juegoEncontrado.reducirStock(cantidad);
+		clienteEncontrado.retirarSaldo(compra.getTotalPrice());
+
+		/*
+		 * NOSE MUY BIEN UQE ESTOY HACIENDO. PERO del cliente que sabemos que existe,
+		 * usamos el metodo para saber que tiene saldo suficiente, usamos que la compra
+		 * que se genero me dara el totalPrice, que es el precio por cantidad ENTONCES
+		 * ESTE IF DEBERIA DEVOLVER TRUE SI EL BALANCE DEL CLIENTE ES MAYOR O IGUAL A LO
+		 * QUE CUESTA LA COMPRA
+		 
+		if (clienteEncontrado.comprobarDisponibilidadBoolean(compra.getTotalPrice())) {
+
+		}*/
+		return compra;
+
 	}
-	
-	
 
 }
-
