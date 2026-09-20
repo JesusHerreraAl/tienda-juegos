@@ -45,14 +45,19 @@ public class Game {
 		this.stock = stock;
 	}
 
-	public void aumentarStock(int cantidad) {
+	public void aumentarStock(int cantidad) throws Exception {
 		//IMPLEMENTAR MEJORA
+		if(cantidad<=0) {
+			throw new Exception("No puedes introducir una cantidad negativa ni cantidad 0");
+		}
 		this.stock = stock + cantidad;
 	}
 
-	public void reducirStock(int cantidad) {
+	public void reducirStock(int cantidad) throws Exception {
 		//IMPLEMENTAR MEJORA
-		
+		if(stock-cantidad<0 || cantidad<=0) {
+			throw new Exception("El stock no puede bajar menor que cero y la cantidad que quieres reducir no puede ser un numero negativo");
+		}
 		this.stock = stock - cantidad;
 	}
 
@@ -63,7 +68,7 @@ public class Game {
 		}
 		return disponible;
 	}
-
+	//MENSAJE POR SI SE QUIERE USAR
 	public void comprobarDisponibilidadMensaje() {
 		if (stock <= 0) {
 			System.out.println("El juego no esta disponible");
@@ -73,9 +78,9 @@ public class Game {
 	}
 
 	public String toString() {
-		return "Nombre: " + title + "\nGenero: " 
+		return "\nNombre: " + title + "\nGenero: " 
 	+ genero.toString() + "\nPrecio: " 
-				+ price + "\nCantidad: " + stock;
+				+ price + "\nCantidad: " + stock +" \n";
 	}
 
 }

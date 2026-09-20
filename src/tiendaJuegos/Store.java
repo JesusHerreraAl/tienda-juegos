@@ -39,11 +39,29 @@ public class Store {
 		games.add(juegoNuevo);
 
 	}
+	
+	/*
+	 * METODO PARA AÑADIR CLIENTES A LA LISTA DE CLIENTE DE STORE
+	 */
+	public void addCliente(Customer clienteNuevo) throws Exception {
+		//QUE EL CLIENTE NO ES NULO
+		if(clienteNuevo==null) {
+			throw new Exception("El cliente no existe o es nulo");
+			
+		}
+		//COMPROBAMOS QUE NO TENGA ID REPETIDO
+		for(Customer cliente: customers) {
+			if(clienteNuevo.getId()==cliente.getId()) {
+				throw new Exception("Ya hay clientes con ese ID");
+			}
+		}
+		//SI PASA LOS FILTROS ANTERIORES LO AGREGAMOS
+		customers.add(clienteNuevo);
+	}
 
 	/*
 	 * metodo generado automaticamente, no lo usare public void
-	 * setGames(ArrayList<Game> games) { //Tendria que crear un exception que no
-	 * deje añadir otro juego con el mismo id this.games = games; }
+	 * setGames(ArrayList<Game> games) { }
 	 */
 
 	public ArrayList<Customer> getCustomers() {
@@ -65,6 +83,11 @@ public class Store {
 	/*
 	 * NOTA: necesito metodo que pille de un juego del arraylist el id en main hacer
 	 * un bloque try catch
+	 */
+	
+	
+	/*
+	 *ESTE METODO ES PARA OBTENER UN JUEGO CON UN ID 
 	 */
 	public Game juegoPorId(int id) throws Exception {
 
@@ -111,7 +134,7 @@ public class Store {
 		return juegoObtenidoPorNombre;
 	}
 
-	// METODO PARA HACER UNA LISTA CON LOS JUEGOS QUE CONTENGAN UNA PALABRA
+	// METODO PARA HACER UNA LISTA CON LOS JUEGOS QUE CONTENGAN UNA PALABRA 8.4
 	public ArrayList<Game> listaJuegosBuscadosPorNombre(String nombre) throws Exception {
 		ArrayList<Game> listaConJuegosBuscados = new ArrayList<>();
 		for (Game juego : games) {

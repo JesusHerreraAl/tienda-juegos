@@ -2,7 +2,7 @@ package tiendaJuegos;
 
 public class Purchase {
 	
-	//REPRESENTA LAS COMPRAS DE LA TIENDAS QUE SE GUARDAN 
+	//REPRESENTA LAS COMPRAS DE LA TIENDAS DE UN CLIENTE
 	
 	private Customer customer; //CLIENTE 
 	private Game game;
@@ -13,7 +13,7 @@ public class Purchase {
 		this.customer=customer;
 		this.game=game;
 		this.quantity=quantity;
-		this.totalPrice=game.getPrice()*quantity;
+		this.totalPrice=game.getPrice()*quantity; //ENTENDER BIEN ESTA PARTE
 	}
 	
 	public Customer getCustomer() {
