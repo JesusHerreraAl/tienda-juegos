@@ -59,6 +59,44 @@ public class Main {
 			
 		}
 		/*
+		 * DADO POR ANA
+		 */
+		try(Scanner scanner = new Scanner(System.in)) {
+			Store store= new Store();
+			String input = "";
+			while(!input.equals("quit")) {
+				input = scanner.nextLine().toLowerCase();
+				String [] command = input.split(" ");//SEPARADOR DEL STRING 
+				
+				switch(command[0]) {
+				case "games":
+					for(Game g: store.getGames()) {
+						System.out.println(g.toText());
+					}
+					break;
+				case "game":
+					if(command.length<2) {
+						throw new Exception("Faltan argumentos");
+					}
+					int id=Integer.parseInt(command[1]);
+					store.juegoPorId(id).toText();
+					break;
+					
+				case "customers":
+					System.out.println(store.getCustomers());
+					break;
+				case "customer":
+					break;
+				case "search":
+					
+					System.out.println(store.listaJuegosBuscadosPorNombre(command[1]));
+					break;
+				default:
+					System.out.println("Opcion no disponible");
+				}
+			}
+		}
+		/*
 		 * ESTA PARTE ES UN BUCLE PARA LOS COMANDOS DE LA CONSOLA
 		 */
 		do {

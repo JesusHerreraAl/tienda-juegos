@@ -1,6 +1,8 @@
 package tiendaJuegos;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Store {
 
@@ -14,7 +16,55 @@ public class Store {
 		games = new ArrayList<Game>();// vacio
 		customers = new ArrayList<Customer>();
 		purchases = new ArrayList<Purchase>();
+		
+		/*AQUI PODEMOS CREAR LOS JUEGOS PARA HACER PRUEBAS*/
 	}
+	
+	public void loadGames(String filename) {
+		//FILE REPRESENTA EL ARCHIVO Y SE LE PASARA UNA RUTA 
+		File file = new File(filename);
+		try(Scanner scanner= new Scanner(file)){
+			String line = null;
+			//MIENTRAS SIGA HABIENDO LINEA ESTARA DENTRO DEL BUCLE
+			while(scanner.hasNextLine()) {
+				//ESA LINEA ESTA GUARDADA EN LINE
+				line=scanner.nextLine();
+				//TENDREMOS UN STRING USANDO SEPARADORES ; cada parteser un string guardado
+				
+				String [] splitLine =line.split(";");
+				int id= Integer.parseInt(splitLine[0]);
+				String name= splitLine[1];
+				Genre genre= Genre.valueOf(splitLine[2]);
+				double price= Double.parseDouble(splitLine[3]);
+				int stock=Integer.parseInt(splitLine[4]);
+				//CONSTRUCTOR: int id, String title, int stock , Genre genero, double price
+				Game g= new Game(id, name, stock, genre, price);
+				games.add(g);
+			}
+		}catch(Exception e) {
+			//imprimir "no se pudo cargar el archivo"
+			System.out.println("No se pudo cargar el archivo");
+		}
+	}
+	public void loadCustomers(String filename) {
+		File file = new File (filename);
+		try(Scanner scanner =new Scanner(file)){
+			String line= null;
+			while(scanner.hasNextLine()) {
+				line=scanner.nextLine();
+				String [] splitLine=line.split(";");
+				int id=Integer.parseInt(splitLine[0]);
+				String name=splitLine[1];
+				double balance=Double.parseDouble(splitLine[2]);
+				//int id, String name, double balance
+				Customer c=new Customer(id, name, balance);
+				customers.add(c);
+			}
+		}catch(Exception e) {
+			System.out.println("Error al cargar el archivo");
+		}
+	}
+	
 
 	public ArrayList<Game> getGames() {
 		return games;
@@ -30,12 +80,23 @@ public class Store {
 		// BUCLE QUE RECORRERA LA LISTA DE VIDEOJUEGOS PARA COMPROBAR QUE ESE JUEGO
 		// NUEVO
 		// NO ESTA DENTRO DE LA LISTA CON ESE MISMO ID, ES DECIR QUE NO SE REPITA EL ID
-		for (Game juego : games) {
+		/*
+		 * HECHO POR MI
+		 * for (Game juego : games) {
 			if (juegoNuevo.getId() == juego.getId()) {
 				throw new Exception("El juego con ese id ya existe, por lo tanto no se podra guardar");
 			}
 		}
 		// SE GUARDA EL JUEGONUEVO A LA LISTA DE GAMES
+		games.add(juegoNuevo);*/
+		
+		//DENTRO USAMOS EL EQUALS DE LA CLASE GAME
+		for(Game juego: games) {
+			//TU DEFINES QUE JUEGO SON IGUALES EN EQUALS DE GAME
+			if(juegoNuevo.equals(juego)) {
+				throw new Exception("El juego con id xx ya existe");
+			}
+		}
 		games.add(juegoNuevo);
 
 	}
@@ -102,6 +163,15 @@ public class Store {
 			throw new Exception("Juego no encontrado");
 		}
 		return juegoObtenidoPorId;
+		
+		/*
+		 * EJEMPLO PROFESOR
+		 * for (Game juego: games){
+			if(juego.getId()==id) {
+				return juego;
+			}
+		}
+		return null;*/
 
 	}
 
@@ -171,6 +241,22 @@ public class Store {
 
 		return listaConJuegosBuscados;
 	}
+	public ArrayList<Game> filtrarPorGeneroENUM(Genre genero) throws Exception {
+
+		ArrayList<Game> listaConJuegosBuscados = new ArrayList<>();
+		for (Game juego : games) {
+			// SI EL GENERO DEL JUEGO CONVERTIDO A STRING ES IGUAL AL GENERO INTRODUCIDO
+			// COMO STRING
+			if (juego.getGenre()==genero) {
+				listaConJuegosBuscados.add(juego);
+			}
+		}
+		if (listaConJuegosBuscados == null) {
+			throw new Exception("No hay juegos con ese genero");
+		}
+
+		return listaConJuegosBuscados;
+	}
 
 	// METODO PARA COMPRAR VIDEOJUEGO PURCHASE
 	public Purchase comprarVideojuego(int idCliente, int idJuego, int cantidad) throws Exception {
@@ -186,8 +272,9 @@ public class Store {
 		 el juego*/
 		for (Game game : games) {
 			if (idJuego == game.getId()) {
-				// tengo que añadir que si hay stock !!SEGUN YO COMO EL JUEGO CON ID EXISTE AHORA COMPRUEBO SU DISPONIBILIDAD!!
-				if(game.comprobarDisponibilidad()) {
+				//tengo que añadir que si hay stock !!SEGUN YO COMO EL JUEGO CON ID EXISTE AHORA COMPRUEBO SU DISPONIBILIDAD!!
+				//ATENTO PORQUE HAY DOS CLASES UNA DE COMPROBOBAR(USANDO ENTERO) Y HAY STOCK
+				if(game.hayStock()) {
 					juegoEncontrado = game;
 				}
 			}
@@ -232,6 +319,33 @@ public class Store {
 		}*/
 		return compra;
 
+	}
+	public void comprarJuego(int clienteID, int juegoID, int cantidad) throws Exception {
+		Game g=juegoPorId(juegoID);
+		if(g==null) {
+			throw new Exception("No existe el juego");
+		}
+		Customer c=clientePorId(clienteID);
+		if(c==null) {
+			throw new Exception("No existe el cliente");
+		}
+		if(cantidad<1) {
+			throw new Exception ("Cantidad no valida");
+		}
+		if(!g.comprobarDisponibilidad(cantidad)) {
+			throw new Exception("No hay stock suficiente");
+		}
+		double precio=g.getPrice()*cantidad;
+		if(!c.comprobarDisponibilidadBoolean(g.getPrice()*cantidad)) {
+			throw new Exception("No hay dinero suficiente");
+		}
+		//ACTUALIZAMOS LOS DATOS POR QUE TODAS LAS CONDICIONES SE CUMPLIERON
+		//Purchase p = new Purchase(c, g, cantidad, precio );
+		Purchase p = new Purchase(c, g, cantidad);
+		purchases.add(p); //AÑADIMOS LA COMPRA
+		g.modificarStock(cantidad);//MODIFICAMOS EL STOCK
+		c.retirarSaldo(precio); //RETIRAMOS EL SALDO
+		
 	}
 
 }

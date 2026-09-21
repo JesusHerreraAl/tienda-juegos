@@ -12,7 +12,18 @@ public class Customer {
 	public Customer(String name, double balance) {
 		this.name = name;
 		this.balance = balance;
-		this.id = contador++;
+		this.id = ++contador;
+	}
+	public Customer(int id, String name, double balance) {
+		this.id=id;
+		this.name=name;
+		this.balance=balance;
+	}
+	public Customer (String name) {
+		this.name=name;
+		this.id = ++contador;
+		this.balance=0;
+		
 	}
 
 	public int getId() {
@@ -75,12 +86,20 @@ public class Customer {
 	// comprobar si tenemos disponibilidad de la cantidad que hemos introducido
 
 	public boolean comprobarDisponibilidadBoolean(double cantidad) {
-		boolean disponible = false;
+		/*boolean disponible = false;
 		if (this.balance >= cantidad) {
 			disponible = true;
 		}
-		return disponible;
+		return disponible;*/
+		return balance >=cantidad;
 
+	}
+	public String toText() {
+		return String.format("""
+				ID: %d
+				Nombre: %s
+				Balance: %.2f
+				""", id, name, balance);
 	}
 
 	public String toString() {

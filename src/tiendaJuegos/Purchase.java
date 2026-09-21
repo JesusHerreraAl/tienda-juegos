@@ -9,11 +9,16 @@ public class Purchase {
 	private int quantity; //CANTIDAD
 	private double totalPrice; //TOTAL DE LO QUE SE GASTO EN LOS JUEGOS
 	
-	public Purchase (Customer customer, Game game, int quantity) {
+	public Purchase (Customer customer, Game game, int quantity, double precio) {
 		this.customer=customer;
 		this.game=game;
 		this.quantity=quantity;
 		this.totalPrice=game.getPrice()*quantity; //ENTENDER BIEN ESTA PARTE
+	}
+	public Purchase(Customer customer, Game game, int quantity) {
+		this.customer=customer;
+		this.game=game;
+		this.quantity=quantity;
 	}
 	
 	public Customer getCustomer() {
